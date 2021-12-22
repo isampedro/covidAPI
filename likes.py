@@ -29,7 +29,7 @@ def main():
     # PostGIS
     try:
         conn = psycopg2.connect(database='postgres', user='postgres',
-                                password='postgres', port=5433, host='localhost')
+                                password='postgres', port=5431, host='localhost')
         print("Connected to PostGIS.")
         curs = conn.cursor()
     except Exception as e:
@@ -61,15 +61,12 @@ def main():
     likes_counter = {}
     for tweet_id in tweets_location:
         text = coll.find_one({"Tweet Id": '"' + str(tweet_id) + '"'}, {'Tweet Content': 1,
-                             'Screen Name': 1, 'Retweets Received': 1, 'Likes Received': 1, '_id': 0})
+                             'Screen Name': 1, 'Likes Received': 1, '_id': 0})
         if text != None:
-            if text['Screen Name'] in likes_counter.keys():
-                likes_counter[text['Screen Name']] += text['Likes Received']
-            else:
-                likes_counter[text['Screen Name']] = text['Likes Received']
+            likes_counter[text['Tweet Content']] = text['Likes Received']
     sorted_likes_counter = sorted(
         likes_counter.items(), key=operator.itemgetter(1), reverse=True)
-    print("\nTop " + str(n) + " Tweeters by likes:")
+    print("\nTop " + str(n) + " Tweets by likes:")
     for tuple in sorted_likes_counter[:n]:
         print(tuple[0] + ': ' + str(tuple[1]))
 

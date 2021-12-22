@@ -61,17 +61,12 @@ def main():
     retweets_counter = {}
     for tweet_id in tweets_location:
         text = coll.find_one({"Tweet Id": '"' + str(tweet_id) + '"'},
-                             {'Screen Name': 1, 'Retweets Received': 1, '_id': 0})
+                             {'Screen Name': 1, 'Retweets Received': 1, 'Tweet Content': 1, '_id': 0})
         if text != None:
-            if text['Screen Name'] in retweets_counter.keys():
-                retweets_counter[text['Screen Name']
-                                 ] += text['Retweets Received']
-            else:
-                retweets_counter[text['Screen Name']
-                                 ] = text['Retweets Received']
+            retweets_counter[text['Tweet Content']] = text['Retweets Received']
     sorted_retweets_counter = sorted(
         retweets_counter.items(), key=operator.itemgetter(1), reverse=True)
-    print("\nTop " + str(n) + " Tweeters by retweets:")
+    print("\nTop " + str(n) + " Tweets by retweets:")
     for tuple in sorted_retweets_counter[:n]:
         print(tuple[0] + ': ' + str(tuple[1]))
 
