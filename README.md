@@ -12,11 +12,11 @@ Shows top N trending hashtags in a given area (center + radius).
 
 ### retweets.py
 
-Shows top N most retweeted users and their contents in a given area (center + radius).
+Shows top N most retweeted contents in a given area (center + radius).
 
 ### likes.py
 
-Shows top N most liked users and their contents in a given area (center + radius).
+Shows top N most liked contents in a given area (center + radius).
 
 ## Usage
 
