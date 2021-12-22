@@ -58,3 +58,4 @@ On terminal, run the following commands:
 - Radius is in kilometres.
 - If the city (or country or map search query) is larger that 1 word, the way you pass it is like 'name of city'.
 - For map search queries, the [geopy](https://geopy.readthedocs.io/en/stable/) Python library has been used, with queries in [Nominatim](https://nominatim.org/).
+- Dataset used: https://docs.google.com/spreadsheets/d/1mMQOHHwNgYNJ5Vyd1A42eBmlpTBzLCYoFT80UVmFtqo/edit?usp=sharing
