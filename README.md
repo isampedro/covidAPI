@@ -18,12 +18,17 @@ Shows top N most retweeted contents in a given area (center + radius).
 
 Shows top N most liked contents in a given area (center + radius).
 
+### hashtags.py
+
+Shows the times that a hashtag appears in a given area (center + radius).
+
 ## Usage
 
 - python import.py [path_to_csv]
 - python trends.py [radius] [city] [topN]
 - python likes.py [radius] [city] [topN]
 - python retweets.py [radius] [city] [topN]
+- python retweets.py [radius] [city] [hashtag]
 
 ## Additional Information
 
