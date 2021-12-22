@@ -22,6 +22,15 @@ Shows top N most liked contents in a given area (center + radius).
 
 Shows the times that a hashtag appears in a given area (center + radius).
 
+
+## Instructions
+
+### Installing necessary modules
+On terminal, run the following commands:
+> pip install psycopg2 <br />
+> pip install pymongo <br />
+> pip install geopy <br />
+
 ## Usage
 
 - python import.py [path_to_csv]
