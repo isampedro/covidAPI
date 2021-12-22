@@ -42,7 +42,7 @@ On terminal, run the following commands:
 ## Additional Information
 
 #### Default parameters (MongoDB)
-
+- path_to_csv = ./COVID.csv
 - database_name = covid
 - collection_name = tweets
 - port: 27017
