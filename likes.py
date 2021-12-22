@@ -22,14 +22,14 @@ def main():
     db = client[db_name]
     coll = db[collection_name]
     # TODO: Check for valid parameters
-    radius = sys.argv[1]
+    radius = str(int(sys.argv[1])*1000)
     city = sys.argv[2]
     n = int(sys.argv[3])
 
     # PostGIS
     try:
         conn = psycopg2.connect(database='postgres', user='postgres',
-                                password='postgres', port=5433, host='localhost')
+                                password='postgres', port=5431, host='localhost')
         print("Connected to PostGIS.")
         curs = conn.cursor()
     except Exception as e:
