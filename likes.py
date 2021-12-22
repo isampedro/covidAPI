@@ -17,7 +17,7 @@ def main():
         print("Connected to MongoDB.")
     except:
         print("Could not connect to MongoDB.")
-    db_name = "covid"
+    db_name = "postgres"
     collection_name = "tweets"
     db = client[db_name]
     coll = db[collection_name]
@@ -29,7 +29,7 @@ def main():
     # PostGIS
     try:
         conn = psycopg2.connect(database='postgres', user='postgres',
-                                password='postgres', port=5431, host='localhost')
+                                password='postgres', port=5433, host='localhost')
         print("Connected to PostGIS.")
         curs = conn.cursor()
     except Exception as e:
@@ -68,7 +68,9 @@ def main():
         likes_counter.items(), key=operator.itemgetter(1), reverse=True)
     print("\nTop " + str(n) + " Tweets by likes:")
     for tuple in sorted_likes_counter[:n]:
-        print(tuple[0] + ': ' + str(tuple[1]))
+        print('------------------------------------------')
+        print('Likes: ' + str(tuple[1]) + '\n' + 'Tweet: ' + tuple[0])
+        print('------------------------------------------')
 
 
 def usage():
