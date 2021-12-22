@@ -22,7 +22,7 @@ def main():
     db = client[db_name]
     coll = db[collection_name]
     # TODO: Check for valid parameters
-    radius = sys.argv[1]
+    radius = str(int(sys.argv[1])*1000)
     city = sys.argv[2]
     n = int(sys.argv[3])
 
