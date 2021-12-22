@@ -37,7 +37,7 @@ On terminal, run the following commands:
 - python trends.py [radius] [city] [topN]
 - python likes.py [radius] [city] [topN]
 - python retweets.py [radius] [city] [topN]
-- python retweets.py [radius] [city] [hashtag]
+- python hashtags.py [radius] [city] [hashtag]
 
 ## Additional Information
 
