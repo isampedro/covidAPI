@@ -1,61 +1,169 @@
-# CovidAPI
+# COVID API Script
+This repository contains a Python Flask API for retrieving COVID-related tweets and analyzing their trends, hashtags, likes, and retweets. The API utilizes MongoDB for tweet storage and PostgreSQL for tweet location data storage.
 
-## Modules Description
+## Packages Needed
+To run this script, you need the following packages:
 
-### import.py
+* Flask: A micro web framework for Python.
+* pymongo: A Python driver for MongoDB.
+* psycopg2: A PostgreSQL adapter for Python.
+* geopy: A Python library for geocoding and reverse geocoding.
+You can install these packages using pip:
 
-Imports data from csv to database in mongoDB and postgres (with postgis addon).
+```
+pip install Flask pymongo psycopg2 geopy
+```
 
-### trends.py
+## Use Cases
+The COVID API script provides several endpoints to retrieve and analyze COVID-related tweets. Here are the available endpoints and their use cases:
 
-Shows top N trending hashtags in a given area (center + radius).
+`/test` (GET): Retrieves a combination of data from MongoDB and PostgreSQL for testing purposes. It fetches the first 10 tweets from each database and combines them into a single JSON response.
 
-### retweets.py
+`/trends` (GET): Retrieves the top trending hashtags based on the provided city and search radius. The endpoint takes three query parameters: city, radius, and n. It uses geocoding to find the specified city's coordinates and then searches for tweets within the given radius. The top n hashtags are returned along with their occurrence count.
 
-Shows top N most retweeted contents in a given area (center + radius).
+`/hashtags` (GET): Searches for tweets with a specific hashtag within the provided city and search radius. The endpoint takes three query parameters: city, radius, and hashtag. It uses geocoding to find the specified city's coordinates and then searches for tweets with the provided hashtag within the given radius. It returns the count of tweets with the hashtag and details of the tweets, including their locations and content.
 
-### likes.py
+`/likes` (GET): Retrieves the top n tweets with the most likes based on the provided city and search radius. The endpoint takes three query parameters: city, radius, and n. It uses geocoding to find the specified city's coordinates and then searches for tweets within the given radius. The top n tweets with the most likes are returned, along with their content and like counts.
 
-Shows top N most liked contents in a given area (center + radius).
+`/retweets` (GET): Retrieves the top n tweets with the most retweets based on the provided city and search radius. The endpoint takes three query parameters: city, radius, and n. It uses geocoding to find the specified city's coordinates and then searches for tweets within the given radius. The top n tweets with the most retweets are returned, along with their content and retweet counts.
 
-### hashtags.py
+## Examples
+Example 1: Retrieving Test Data
+Request:
 
-Shows the times that a hashtag appears in a given area (center + radius).
+```
+GET /test
+```
 
+Response:
 
-## Instructions
+```
+{
+  "mongodb_data": [
+    {
+      "field1": "value1",
+      "field2": "value2"
+    },
+    ...
+  ],
+  "postgresql_data": [
+    {
+      "field1": "value1",
+      "field2": "value2"
+    },
+    ...
+  ]
+}
+```
 
-### Installing necessary modules
-On terminal, run the following commands:
-> pip install psycopg2 <br />
-> pip install pymongo <br />
-> pip install geopy <br />
+Example 2: Retrieving Top Trending Hashtags
+Request:
 
-## Usage
+```
+GET /trends?city=New%20York&radius=100&n=5
+```
+Response:
 
-- python import.py [path_to_csv]
-- python trends.py [radius] [city] [topN]
-- python likes.py [radius] [city] [topN]
-- python retweets.py [radius] [city] [topN]
-- python hashtags.py [radius] [city] [hashtag]
+```
+{
+  "trends": {
+    "hashtag1": 100,
+    "hashtag2": 90,
+    "hashtag3": 80,
+    "hashtag4": 70,
+    "hashtag5": 60
+  }
+}
+```
 
-## Additional Information
+Example 3: Searching for Tweets with a Specific Hashtag
+Request:
 
-#### Default parameters (MongoDB)
-- path_to_csv = ./COVID.csv
-- database_name = covid
-- collection_name = tweets
-- port: 27017
+```
+GET /hashtags?city=Los%20Angeles&radius=50&hashtag=covid19
+```
 
-#### Default parameters (PostgreSQL)
+Response:
 
-- database_name = covid
-- table_name = tweets
-- port: 5431
+```
+{
+  "hashtags": {
+    "hashtag": "covid19",
+    "count": 10,
+    "results": {
+      "tweet_id1": {
+        "location": [longitude, latitude],
+        "content": "Tweet content 1"
+      },
+      "tweet_id2": {
+        "location": [longitude, latitude],
+        "content": "Tweet content 2"
+      },
+      ...
+    }
+  }
+}
+```
 
-#### Notes
+Example 4: Retrieving Top Tweets by Likes
+Request:
 
-- Radius is in kilometres.
-- If the city (or country or map search query) is larger that 1 word, the way you pass it is like 'name of city'.
-- For map search queries, the [geopy](https://geopy.readthedocs.io/en/stable/) Python library has been used, with queries in [Nominatim](https://nominatim.org/).
-- Dataset used: https://docs.google.com/spreadsheets/d/1mMQOHHwNgYNJ5Vyd1A42eBmlpTBzLCYoFT80UVmFtqo/edit?usp=sharing
+```
+GET /likes?city=Chicago&radius=75&n=3
+```
+
+```
+{
+  "likes": {
+    "Top 1": {
+      "Likes": 150,
+      "Tweet": "Tweet content 1"
+    },
+    "Top 2": {
+      "Likes": 120,
+      "Tweet": "Tweet content 2"
+    },
+    "Top 3": {
+      "Likes": 100,
+      "Tweet": "Tweet content 3"
+    }
+  }
+}
+```
+
+Example 5: Retrieving Top Tweets by Retweets
+Request:
+
+```
+GET /retweets?city=Miami&radius=60&n=4
+```
+
+Response:
+
+```
+{
+  "retweets": {
+    "1": {
+      "Retweets": 200,
+      "Tweet": "Tweet content 1"
+    },
+    "2": {
+      "Retweets": 180,
+      "Tweet": "Tweet content 2"
+    },
+    "3": {
+      "Retweets": 160,
+      "Tweet": "Tweet content 3"
+    },
+    "4": {
+      "Retweets": 140,
+      "Tweet": "Tweet content 4"
+    }
+  }
+}
+```
+
+## Note
+Please make sure to have a running MongoDB and PostgreSQL instance with proper configurations before running the API script. Also, adjust the connection parameters according to your database setup.
+
+To run the API, execute the script in your Python environment. The API will be available at http://localhost:5000/. Use the provided examples to access the different endpoints and retrieve data related to COVID-related tweets.
