@@ -8,6 +8,7 @@ To run this script, you need the following packages:
 * pymongo: A Python driver for MongoDB.
 * psycopg2: A PostgreSQL adapter for Python.
 * geopy: A Python library for geocoding and reverse geocoding.
+
 You can install these packages using pip:
 
 ```
@@ -111,6 +112,8 @@ Request:
 ```
 GET /likes?city=Chicago&radius=75&n=3
 ```
+
+Response:
 
 ```
 {
